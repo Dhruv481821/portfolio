@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+@theme {
+  /* ---- Color tokens ---- */
+  --color-bg: #0a0e17;
+  --color-surface: #0f1420;
+  --color-surface-raised: #141a29;
+  --color-border: #232b3d;
+  --color-text: #f5f7fa;
+  --color-muted: #8b93a7;
+  --color-muted-dim: #5b6377;
+
+  --color-electric: #4c7fff;
+  --color-electric-dim: #2f52b3;
+  --color-purple: #8b5cf6;
+  --color-cyan: #22d3ee;
+
+  /* ---- Typography ---- */
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-body: "Inter", -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ---- Layout ---- */
+  --breakpoint-xs: 375px;
+  --container-content: 1280px;
+}
+
+/* Light theme override — still premium, not a plain white swap */
+[data-theme="light"] {
+  --color-bg: #f6f7fb;
+  --color-surface: #ffffff;
+  --color-surface-raised: #ffffff;
+  --color-border: #e2e5ef;
+  --color-text: #10131c;
+  --color-muted: #565f76;
+  --color-muted-dim: #7d859c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-electric);
+  color: #fff;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-electric-dim);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- Reusable design primitives ---- */
+.glass {
+  background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
+}
+
+.gradient-text {
+  background: linear-gradient(
+    100deg,
+    var(--color-electric) 0%,
+    var(--color-purple) 50%,
+    var(--color-cyan) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glow-electric {
+  box-shadow: 0 0 40px -8px color-mix(in srgb, var(--color-electric) 55%, transparent);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 40px -8px color-mix(in srgb, var(--color-cyan) 55%, transparent);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.section-container {
+  max-width: var(--container-content);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-container {
+    padding-inline: 2.5rem;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+
+.noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}

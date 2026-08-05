@@ -1,0 +1,17 @@
+{
+  "name": "Dhruv Sharma — Software Developer Portfolio",
+  "short_name": "Dhruv Sharma",
+  "description": "Portfolio of Dhruv Sharma, a BCA student and aspiring Software Developer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e17",
+  "theme_color": "#0a0e17",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
