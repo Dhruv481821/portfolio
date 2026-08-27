@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Download, Menu, Moon, Sun, X } from "lucide-react";
+import { Download, Menu, Moon, Search, Sun, X } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { NAV_HREFS, NAV_LINKS } from "@/constants/navigation";
 import { PROFILE } from "@/constants/profile";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useTheme } from "@/context/ThemeContext";
 import { scrollToId } from "@/utils/scroll";
+import { CMDK_LABEL, CMDK_OPEN_EVENT } from "@/components/ui/CommandPalette";
 import { cn } from "@/utils/cn";
 
 export function Navbar() {
@@ -103,6 +104,14 @@ export function Navbar() {
           </ul>
 
           <div className="hidden items-center gap-2 lg:flex">
+            <button
+              onClick={() => window.dispatchEvent(new Event(CMDK_OPEN_EVENT))}
+              aria-label="Open command menu"
+              className="glass glass-hover flex items-center gap-2 rounded-full px-3 py-2 text-xs text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
+            >
+              <Search size={14} />
+              <span className="font-mono">{CMDK_LABEL}</span>
+            </button>
             <button
               onClick={toggleTheme}
               aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}

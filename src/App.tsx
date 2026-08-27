@@ -7,6 +7,7 @@ import { CursorGlow } from "@/components/shared/CursorGlow";
 import { SEO } from "@/components/shared/SEO";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { CommandPalette } from "@/components/ui/CommandPalette";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 
@@ -87,6 +88,7 @@ function App() {
           Skip to content
         </a>
         <Navbar />
+        <CommandPalette />
         <main className="relative z-10">
           <HeroSection />
           <AboutSection />
