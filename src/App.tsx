@@ -18,6 +18,11 @@ const SkillsSection = lazy(() =>
 const ProjectsSection = lazy(() =>
   import("@/components/sections/ProjectsSection").then((m) => ({ default: m.ProjectsSection }))
 );
+const SqlPlaygroundSection = lazy(() =>
+  import("@/components/sections/SqlPlaygroundSection").then((m) => ({
+    default: m.SqlPlaygroundSection,
+  }))
+);
 const ExperienceSection = lazy(() =>
   import("@/components/sections/ExperienceSection").then((m) => ({
     default: m.ExperienceSection,
@@ -97,6 +102,9 @@ function App() {
           </Suspense>
           <Suspense fallback={<SectionFallback />}>
             <ProjectsSection />
+          </Suspense>
+          <Suspense fallback={<SectionFallback />}>
+            <SqlPlaygroundSection />
           </Suspense>
           <Suspense fallback={<SectionFallback />}>
             <ExperienceSection />
