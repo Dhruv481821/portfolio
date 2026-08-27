@@ -40,7 +40,7 @@ export function BlogSection() {
 
         <motion.div
           key={activeTag}
-          variants={staggerContainer(0.08)}
+          variants={staggerContainer()}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}

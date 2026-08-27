@@ -6,12 +6,12 @@ export function LoadingScreen({ isLoading }: { isLoading: boolean }) {
       {isLoading && (
         <motion.div
           className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[var(--color-bg)]"
-          exit={{ opacity: 0, transition: { duration: 0.6, ease: "easeInOut" } }}
+          exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }}
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.25 }}
             className="font-[var(--font-display)] text-2xl font-semibold tracking-tight"
           >
             <span className="gradient-text">DS</span>

@@ -1,12 +1,10 @@
 import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ProjectCard } from "@/components/sections/ProjectCard";
 import { ProjectModal } from "@/components/sections/ProjectModal";
 import { PROJECTS } from "@/data/projects";
 import type { Project } from "@/types";
-import { staggerContainer } from "@/animations/variants";
 import { cn } from "@/utils/cn";
 
 export function ProjectsSection() {
@@ -73,17 +71,19 @@ export function ProjectsSection() {
           </div>
         </div>
 
-        <motion.div
-          key={category + query}
-          variants={staggerContainer(0.08)}
-          initial="hidden"
-          animate="visible"
+        <div
+          /**
+           * No stagger container here: cards self-trigger (see ProjectCard) so
+           * that search-filtered cards still reveal when they remount. `query`
+           * is deliberately not part of any key — it used to be, which replayed
+           * the whole grid's reveal on every keystroke.
+           */
           className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           {filtered.map((project) => (
             <ProjectCard key={project.id} project={project} onOpen={setSelected} />
           ))}
-        </motion.div>
+        </div>
 
         {filtered.length === 0 && (
           <p className="py-12 text-center text-[var(--color-muted)]">

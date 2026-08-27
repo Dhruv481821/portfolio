@@ -64,7 +64,13 @@ function App() {
   useLenis();
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setIsLoading(false), 900);
+    /**
+     * This splash is purely cosmetic — it isn't gating on any real work. 900ms
+     * of deliberately blank screen on top of a 0.6s fade out meant 1.5s before
+     * the page was usable, which reads as "slow site" no matter how fast
+     * everything after it is. Trimmed to a brief beat that covers first paint.
+     */
+    const timer = window.setTimeout(() => setIsLoading(false), 280);
     return () => window.clearTimeout(timer);
   }, []);
 

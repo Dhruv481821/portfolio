@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import Lenis from "@studio-freight/lenis";
+import { registerLenis } from "@/lib/lenis";
 
 /**
  * Initializes Lenis smooth scrolling for the app lifetime.
@@ -13,12 +14,22 @@ export function useLenis() {
     if (prefersReducedMotion) return;
 
     const lenis = new Lenis({
-      duration: 0.7,
-      easing: (t) => 1 - Math.pow(1 - t, 3), // snappier ease-out, less "floaty" lag
+      /**
+       * `lerp` instead of `duration` + `easing`.
+       *
+       * Duration mode restarts a fixed-length tween on every wheel event, so a
+       * burst of scrolling queues up overlapping tweens and the page keeps
+       * gliding after your fingers stop — that's the "floaty / laggy" feel.
+       * lerp mode instead eases toward a moving target, so it stays glued to
+       * the input. 0.12 is responsive without losing the weighted feel.
+       */
+      lerp: 0.12,
       smoothWheel: true,
-      syncTouch: false, // let touchscreens use native scroll — smoothing feels laggy on touch/trackpad
+      syncTouch: false, // let touchscreens use native scroll — smoothing feels laggy on touch
       touchMultiplier: 1,
     });
+
+    registerLenis(lenis);
 
     let rafId: number;
     function raf(time: number) {
@@ -29,6 +40,7 @@ export function useLenis() {
 
     return () => {
       cancelAnimationFrame(rafId);
+      registerLenis(null);
       lenis.destroy();
     };
   }, []);

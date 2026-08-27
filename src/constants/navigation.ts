@@ -12,6 +12,9 @@ export const NAV_LINKS: NavLink[] = [
   { label: "Contact", href: "#contact" },
 ];
 
+/** Precomputed once so scroll-observing hooks get a stable array identity. */
+export const NAV_HREFS: string[] = NAV_LINKS.map((l) => l.href);
+
 export const SOCIAL_LINKS: SocialLink[] = [
   { label: "GitHub", href: "https://github.com/Dhruv481821", icon: "github" },
   {

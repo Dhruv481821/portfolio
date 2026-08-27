@@ -31,14 +31,14 @@ const STRENGTHS = [
 ];
 
 function StatCard({ label, value, suffix }: { label: string; value: number; suffix: string }) {
-  const { ref, value: current } = useCountUp(value);
+  const { ref } = useCountUp(value);
   return (
     <GlassCard className="text-center">
-      <span
-        ref={ref}
-        className="font-[var(--font-display)] text-3xl font-semibold gradient-text sm:text-4xl"
-      >
-        {current}
+      <span className="font-[var(--font-display)] text-3xl font-semibold gradient-text sm:text-4xl">
+        {/* The ref'd span wraps only the digits, so the count-up can write to
+            its text node without clobbering the suffix. The final value is the
+            rendered content; the hook zeroes it before first paint. */}
+        <span ref={ref}>{value}</span>
         {suffix}
       </span>
       <p className="mt-2 text-xs font-mono uppercase tracking-wide text-[var(--color-muted)]">
@@ -60,7 +60,7 @@ export function AboutSection() {
 
         <div className="grid gap-6 lg:grid-cols-2">
           <motion.div
-            variants={staggerContainer(0.1)}
+            variants={staggerContainer()}
             initial="hidden"
             whileInView="visible"
             viewport={viewportOnce}
@@ -78,7 +78,7 @@ export function AboutSection() {
           </motion.div>
 
           <motion.div
-            variants={staggerContainer(0.1)}
+            variants={staggerContainer()}
             initial="hidden"
             whileInView="visible"
             viewport={viewportOnce}

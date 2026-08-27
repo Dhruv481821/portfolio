@@ -42,7 +42,7 @@ export function ExperienceSection() {
         />
 
         <motion.div
-          variants={staggerContainer(0.12)}
+          variants={staggerContainer()}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}

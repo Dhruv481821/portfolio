@@ -17,7 +17,7 @@ export function EducationSection() {
         />
 
         <motion.ol
-          variants={staggerContainer(0.15)}
+          variants={staggerContainer()}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}

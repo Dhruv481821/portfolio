@@ -221,7 +221,7 @@ export function ContactSection() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-[var(--color-surface)]/95 backdrop-blur-sm"
+                  className="absolute inset-0 flex flex-col items-center justify-center rounded-2xl bg-[var(--color-surface)]"
                 >
                   <motion.div
                     initial={{ scale: 0.6, opacity: 0 }}

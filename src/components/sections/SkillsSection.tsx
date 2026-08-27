@@ -51,8 +51,12 @@ export function SkillsSection() {
 
         <motion.div
           key={active}
-          variants={staggerContainer(0.06)}
+          variants={staggerContainer()}
           initial="hidden"
+          // `animate`, not `whileInView`: with key={active} this grid remounts on
+          // every tab click while already on screen, and waiting on an async
+          // IntersectionObserver callback shows one blank frame. The bars inside
+          // still have their own viewport trigger for the first scroll-in.
           animate="visible"
           className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >

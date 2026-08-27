@@ -24,10 +24,17 @@ export function GitHubSection() {
               Contribution activity
             </h3>
             <div className="overflow-x-auto rounded-xl bg-[var(--color-bg)]/40 p-2">
+              {/* Explicit intrinsic size + aspect-ratio. These are remote images
+                  that arrive mid-scroll; without dimensions the browser reflows
+                  everything below them the moment they land, which is felt as a
+                  jolt rather than seen as a layout shift. */}
               <img
                 src={`https://ghchart.rshah.org/4c7fff/${GITHUB_USERNAME}`}
                 alt={`${PROFILE.name}'s GitHub contribution graph`}
                 loading="lazy"
+                decoding="async"
+                width={663}
+                height={104}
                 className="w-full min-w-[600px]"
               />
             </div>
@@ -41,13 +48,16 @@ export function GitHubSection() {
               src={`https://github-readme-stats.vercel.app/api?username=${GITHUB_USERNAME}&show_icons=true&theme=dark&hide_border=true&bg_color=00000000&title_color=4c7fff&icon_color=22d3ee&text_color=8b93a7`}
               alt={`${PROFILE.name}'s GitHub stats`}
               loading="lazy"
+              decoding="async"
+              width={495}
+              height={195}
               className="w-full"
             />
           </GlassCard>
         </div>
 
         <motion.div
-          variants={staggerContainer(0.1)}
+          variants={staggerContainer()}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}

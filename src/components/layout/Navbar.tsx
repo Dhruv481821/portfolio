@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Download, Menu, Moon, Sun, X } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { NAV_LINKS } from "@/constants/navigation";
+import { NAV_HREFS, NAV_LINKS } from "@/constants/navigation";
 import { PROFILE } from "@/constants/profile";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useTheme } from "@/context/ThemeContext";
@@ -13,12 +13,24 @@ export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  const activeId = useActiveSection(NAV_LINKS.map((l) => l.href));
+  const activeId = useActiveSection(NAV_HREFS);
 
   useEffect(() => {
+    let queued = false;
+
     function onScroll() {
-      setScrolled(window.scrollY > 24);
+      // rAF-coalesce: scroll fires far more often than we can paint, and we
+      // only care about one boolean. This also guarantees the read of
+      // `window.scrollY` happens at frame time rather than mid-scroll.
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(() => {
+        queued = false;
+        const next = window.scrollY > 24;
+        setScrolled((prev) => (prev === next ? prev : next));
+      });
     }
+
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -32,15 +44,19 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-300",
+        // No transition here. `transition-all` used to animate the padding
+        // change, but padding is a layout property: 300ms of per-frame reflow on
+        // a fixed bar, every time you cross the 24px threshold. The py-5 -> py-3
+        // snap is imperceptible next to the nav's own colour fade.
+        "fixed inset-x-0 top-0 z-50",
         scrolled ? "py-3" : "py-5"
       )}
     >
       <div className="section-container">
         <nav
           className={cn(
-            "flex items-center justify-between rounded-2xl px-4 py-2.5 transition-all duration-300",
-            scrolled && "glass"
+            "flex items-center justify-between rounded-2xl px-4 py-2.5 transition-[background-color,border-color] duration-300",
+            scrolled && "glass-blur"
           )}
           aria-label="Primary"
         >
@@ -145,7 +161,7 @@ export function Navbar() {
             className="overflow-hidden lg:hidden"
           >
             <div className="section-container mt-2">
-              <div className="glass flex flex-col gap-1 rounded-2xl p-4">
+              <div className="glass-blur flex flex-col gap-1 rounded-2xl p-4">
                 {NAV_LINKS.map((link) => (
                   <a
                     key={link.href}

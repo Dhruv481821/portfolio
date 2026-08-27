@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Chip } from "@/components/ui/Chip";
-import { fadeUp } from "@/animations/variants";
+import { fadeUp, viewportOnce } from "@/animations/variants";
 import type { Project } from "@/types";
 
 export function ProjectCard({
@@ -14,7 +14,14 @@ export function ProjectCard({
   onOpen: (project: Project) => void;
 }) {
   return (
-    <motion.div variants={fadeUp}>
+    /**
+     * Self-triggering rather than inheriting from a parent stagger container.
+     * Search filtering mounts cards *after* the container has already fired,
+     * and Framer Motion only propagates a variant to the children that exist at
+     * that moment — so an inherited card that appears later would stay stuck at
+     * `hidden` (invisible) forever. Clearing the search box is enough to hit it.
+     */
+    <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}>
       <GlassCard className="group flex h-full flex-col overflow-hidden !p-0">
         <button
           onClick={() => onOpen(project)}

@@ -25,6 +25,13 @@
   --container-content: 1280px;
 }
 
+/* Surface opacity for faux-glass panels. Higher than the old translucent
+   value because there is no longer a backdrop blur to separate the panel
+   from what sits behind it. */
+:root {
+  --glass-opacity: 82%;
+}
+
 /* Light theme override — still premium, not a plain white swap */
 [data-theme="light"] {
   --color-bg: #f6f7fb;
@@ -34,14 +41,23 @@
   --color-text: #10131c;
   --color-muted: #565f76;
   --color-muted-dim: #7d859c;
+  --glass-opacity: 78%;
 }
 
 * {
   box-sizing: border-box;
 }
 
+/* NOTE: no `scroll-behavior: smooth` here. Lenis owns smooth scrolling; a
+   native smooth-scroll on the same document fights Lenis's rAF loop and is
+   the classic cause of stuttering anchor jumps. */
+
 html {
-  scroll-behavior: smooth;
+  /* Reserve the scrollbar track permanently. Opening a modal stops Lenis and
+     sets `overflow: hidden` on the root, which otherwise reclaims the ~15px
+     scrollbar gutter and shifts the entire page sideways for as long as the
+     modal is open. */
+  scrollbar-gutter: stable;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -64,7 +80,36 @@ body {
   color: var(--color-text);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  /* `clip` instead of `hidden`: `overflow-x: hidden` promotes <body> to a
+     scroll container, which competes with Lenis for ownership of the scroll
+     position. `clip` suppresses horizontal overflow without doing that. */
+  overflow-x: clip;
+}
+
+/* ---- Lenis smooth-scroll reset ----
+   Lenis toggles these classes on <html>. The `scroll-behavior: auto` guard is
+   the important one: it hard-blocks any native smooth-scroll from running at
+   the same time as Lenis, no matter where it gets set from. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Hit-testing iframes mid-scroll forces synchronous work; skip it. */
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
 }
 
 ::selection {
@@ -93,11 +138,53 @@ body {
 }
 
 /* ---- Reusable design primitives ---- */
+
+/*
+ * `.glass` — the cheap default, used for the ~24 cards, badges, chips and
+ * buttons that sit directly on the page background. It has NO backdrop-filter.
+ *
+ * Why: backdrop-filter forces the browser to snapshot and re-blur whatever is
+ * behind the element on every single frame it is on screen. With two dozen of
+ * them (some nested inside each other) that alone was enough to blow the 16ms
+ * frame budget while scrolling. Since these panels sit on a flat background,
+ * a slightly more opaque solid fill is visually near-identical and free.
+ */
 .glass {
+  background: color-mix(in srgb, var(--color-surface) var(--glass-opacity), transparent);
+  border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
+}
+
+/* Hover accent for interactive cards. Kept in CSS rather than as a Tailwind
+   arbitrary value so the color-mix() expression stays readable. */
+.glass-hover:hover {
+  border-color: color-mix(in srgb, var(--color-electric) 60%, transparent);
+}
+
+/*
+ * `.glass-blur` — the real frosted effect. Reserved for the two places where
+ * content genuinely passes *behind* the panel and the blur does visual work:
+ * the fixed navbar and the modal dialog. `isolation` keeps the filter from
+ * sampling more of the page than it needs to.
+ */
+.glass-blur {
   background: color-mix(in srgb, var(--color-surface) 60%, transparent);
   backdrop-filter: blur(10px) saturate(120%);
   -webkit-backdrop-filter: blur(10px) saturate(120%);
   border: 1px solid color-mix(in srgb, var(--color-border) 80%, transparent);
+  isolation: isolate;
+}
+
+/*
+ * Static decorative blurs (the ambient hero glows). Promoting them to their
+ * own compositor layer means the expensive 100px blur is rasterized once and
+ * then only re-composited as the page scrolls, instead of being repainted.
+ *
+ * Deliberately no `contain: paint` here — that would clip the blur to the
+ * element's box and flatten the glow into a hard-edged circle.
+ */
+.glow-layer {
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .gradient-text {

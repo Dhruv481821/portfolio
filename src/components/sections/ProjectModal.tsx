@@ -72,7 +72,7 @@ export function ProjectModal({
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full glass px-5 py-2.5 text-sm font-medium transition-colors hover:border-[var(--color-electric)]/60"
+                className="inline-flex items-center gap-2 rounded-full glass px-5 py-2.5 text-sm font-medium transition-colors glass-hover"
               >
                 <FaGithub size={16} />
                 View code

@@ -2,6 +2,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
+import { startLenis, stopLenis } from "@/lib/lenis";
 
 interface ModalProps {
   isOpen: boolean;
@@ -17,6 +18,9 @@ export function Modal({ isOpen, onClose, children, labelledBy }: ModalProps) {
     if (!isOpen) return;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    // Freeze Lenis too. Setting body overflow alone doesn't stop its rAF loop,
+    // so it keeps easing toward a stale target behind the dialog.
+    stopLenis();
     closeButtonRef.current?.focus();
 
     function onKeyDown(e: KeyboardEvent) {
@@ -25,6 +29,7 @@ export function Modal({ isOpen, onClose, children, labelledBy }: ModalProps) {
     window.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = prevOverflow;
+      startLenis();
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [isOpen, onClose]);
@@ -53,7 +58,14 @@ export function Modal({ isOpen, onClose, children, labelledBy }: ModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
-            className="glass relative z-10 max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-3xl p-6 md:p-10"
+            /**
+             * Required. While Lenis is stopped it calls `preventDefault()` on
+             * wheel/touch events window-wide, which would also kill this panel's
+             * own `overflow-y-auto`. `data-lenis-prevent` tells Lenis to ignore
+             * events originating inside here.
+             */
+            data-lenis-prevent
+            className="glass-blur relative z-10 max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-3xl p-6 md:p-10"
           >
             <button
               ref={closeButtonRef}

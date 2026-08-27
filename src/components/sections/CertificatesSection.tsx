@@ -22,7 +22,7 @@ export function CertificatesSection() {
         />
 
         <motion.div
-          variants={staggerContainer(0.1)}
+          variants={staggerContainer()}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
@@ -98,7 +98,7 @@ export function CertificatesSection() {
                   href={selected.verifyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full glass px-5 py-2.5 text-sm font-medium transition-colors hover:border-[var(--color-electric)]/60"
+                  className="inline-flex items-center gap-2 rounded-full glass px-5 py-2.5 text-sm font-medium transition-colors glass-hover"
                 >
                   Verify online
                   <ExternalLink size={15} />

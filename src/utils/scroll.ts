@@ -1,6 +1,9 @@
+import { scrollToTarget } from "@/lib/lenis";
+
+/**
+ * Scrolls to an anchor. Delegates to Lenis so there is exactly one thing
+ * writing the scroll position — see `src/lib/lenis.ts` for why that matters.
+ */
 export function scrollToId(id: string, offset = 80) {
-  const el = document.querySelector(id);
-  if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - offset;
-  window.scrollTo({ top, behavior: "smooth" });
+  scrollToTarget(id, -offset);
 }

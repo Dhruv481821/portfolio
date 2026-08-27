@@ -17,7 +17,7 @@ const variantStyles: Record<Variant, string> = {
   primary:
     "bg-gradient-to-r from-[var(--color-electric)] to-[var(--color-purple)] text-white shadow-[0_0_30px_-8px_var(--color-electric)] hover:shadow-[0_0_44px_-6px_var(--color-electric)]",
   secondary:
-    "glass text-[var(--color-text)] hover:border-[var(--color-electric)]/60",
+    "glass text-[var(--color-text)] glass-hover",
   ghost: "text-[var(--color-muted)] hover:text-[var(--color-text)]",
 };
 

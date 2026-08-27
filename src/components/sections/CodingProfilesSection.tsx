@@ -23,7 +23,7 @@ export function CodingProfilesSection() {
         />
 
         <motion.div
-          variants={staggerContainer(0.1)}
+          variants={staggerContainer()}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}

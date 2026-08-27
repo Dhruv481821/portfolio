@@ -25,7 +25,7 @@ export function ServicesSection() {
         />
 
         <motion.div
-          variants={staggerContainer(0.08)}
+          variants={staggerContainer()}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
