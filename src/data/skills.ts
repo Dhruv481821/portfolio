@@ -22,6 +22,8 @@ export const SKILLS: Skill[] = [
 
   // Tools
   { name: "Git & GitHub", icon: "git", level: 82, years: 2, category: "Tools" },
+  { name: "Docker", icon: "docker", level: 55, years: 1, category: "Tools" },
+  { name: "Jira & Agile", icon: "jira", level: 60, years: 1, category: "Tools" },
   { name: "Figma", icon: "figma", level: 60, years: 1, category: "Tools" },
   { name: "Canva", icon: "canva", level: 70, years: 2, category: "Tools" },
   { name: "Jupyter Notebook", icon: "jupyter", level: 55, years: 1, category: "Tools" },
@@ -29,4 +31,9 @@ export const SKILLS: Skill[] = [
 
   // AI Tools
   { name: "Claude", icon: "claude", level: 85, years: 1, category: "AI Tools" },
+  { name: "ChatGPT", icon: "chatgpt", level: 80, years: 1, category: "AI Tools" },
+  { name: "GitHub Copilot", icon: "copilot", level: 75, years: 1, category: "AI Tools" },
+  { name: "OpenAI Codex", icon: "codex", level: 60, years: 1, category: "AI Tools" },
+  { name: "Ollama", icon: "ollama", level: 55, years: 1, category: "AI Tools" },
+  { name: "n8n", icon: "n8n", level: 50, years: 1, category: "AI Tools" },
 ];

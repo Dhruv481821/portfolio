@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { viewportOnce } from "@/animations/variants";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 /**
  * Skill level bar.
@@ -9,11 +9,19 @@ import { viewportOnce } from "@/animations/variants";
  * simultaneously — one of the heaviest things on the page. `scaleX` is handed
  * to the compositor and costs effectively nothing.
  *
- * Needs `origin-left` so it grows rightward from the start of the track.
+ * The viewport trigger watches the *track* (always full width), not the fill
+ * itself. The fill starts at scaleX(0), which collapses its rendered bounding
+ * box to zero width — and a zero-width element can fail to register as
+ * "in view" depending on its exact pixel offset. Watching the track instead
+ * means the observed element's size never changes.
  */
 export function ProgressBar({ level }: { level: number }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(trackRef, { once: true, margin: "-10% 0px" });
+
   return (
     <div
+      ref={trackRef}
       className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--color-border)]"
       role="progressbar"
       aria-valuenow={level}
@@ -22,8 +30,7 @@ export function ProgressBar({ level }: { level: number }) {
     >
       <motion.div
         initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: level / 100 }}
-        viewport={viewportOnce}
+        animate={{ scaleX: inView ? level / 100 : 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         className="h-full w-full origin-left rounded-full bg-gradient-to-r from-[var(--color-electric)] via-[var(--color-purple)] to-[var(--color-cyan)]"
       />
