@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Download, Menu, Moon, Search, Sun, X } from "lucide-react";
+import { Download, Menu, Moon, Sun, X } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { NAV_HREFS, NAV_LINKS } from "@/constants/navigation";
 import { PROFILE } from "@/constants/profile";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { useTheme } from "@/context/ThemeContext";
 import { scrollToId } from "@/utils/scroll";
-import { CMDK_LABEL, CMDK_OPEN_EVENT } from "@/components/ui/CommandPalette";
 import { cn } from "@/utils/cn";
 
 export function Navbar() {
@@ -74,7 +73,7 @@ export function Navbar() {
           </a>
 
           {/* Desktop links */}
-          <ul className="hidden items-center gap-1 lg:flex">
+          <ul className="hidden items-center gap-0.5 xl:flex">
             {NAV_LINKS.map((link) => (
               <li key={link.href} className="relative">
                 <a
@@ -84,7 +83,7 @@ export function Navbar() {
                     handleNavClick(link.href);
                   }}
                   className={cn(
-                    "relative rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                    "relative whitespace-nowrap rounded-full px-3 py-2 text-[13px] font-medium transition-colors",
                     activeId === link.href
                       ? "text-[var(--color-text)]"
                       : "text-[var(--color-muted)] hover:text-[var(--color-text)]"
@@ -94,7 +93,11 @@ export function Navbar() {
                     <motion.span
                       layoutId="nav-active-indicator"
                       className="absolute inset-0 rounded-full bg-white/5"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30,
+                      }}
                     />
                   )}
                   <span className="relative">{link.label}</span>
@@ -103,44 +106,49 @@ export function Navbar() {
             ))}
           </ul>
 
-          <div className="hidden items-center gap-2 lg:flex">
-            <button
-              onClick={() => window.dispatchEvent(new Event(CMDK_OPEN_EVENT))}
-              aria-label="Open command menu"
-              className="glass glass-hover flex items-center gap-2 rounded-full px-3 py-2 text-xs text-[var(--color-muted)] transition-colors hover:text-[var(--color-text)]"
-            >
-              <Search size={14} />
-              <span className="font-mono">{CMDK_LABEL}</span>
-            </button>
-            <button
-              onClick={toggleTheme}
-              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-              className="rounded-full p-2.5 text-[var(--color-muted)] transition-colors hover:bg-white/5 hover:text-[var(--color-text)]"
-            >
-              {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
-            </button>
-            <a
-              href={PROFILE.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub profile"
-              className="rounded-full p-2.5 text-[var(--color-muted)] transition-colors hover:bg-white/5 hover:text-[var(--color-text)]"
-            >
-              <FaGithub size={17} />
-            </a>
-            <a
-              href={PROFILE.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn profile"
-              className="rounded-full p-2.5 text-[var(--color-muted)] transition-colors hover:bg-white/5 hover:text-[var(--color-text)]"
-            >
-              <FaLinkedin size={17} />
-            </a>
+          <div className="hidden items-center gap-1 xl:flex">
+            <div className="mr-1 flex items-center gap-1">
+              <button
+                onClick={toggleTheme}
+                aria-label={
+                  theme === "dark"
+                    ? "Switch to light theme"
+                    : "Switch to dark theme"
+                }
+                className="rounded-full p-2.5 text-[var(--color-muted)] transition-colors hover:bg-white/5 hover:text-[var(--color-text)]"
+              >
+                {theme === "dark" ? (
+                  <Sun size={17} />
+                ) : (
+                  <Moon size={17} />
+                )}
+              </button>
+
+              <a
+                href={PROFILE.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub profile"
+                className="rounded-full p-2.5 text-[var(--color-muted)] transition-colors hover:bg-white/5 hover:text-[var(--color-text)]"
+              >
+                <FaGithub size={17} />
+              </a>
+
+              <a
+                href={PROFILE.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn profile"
+                className="rounded-full p-2.5 text-[var(--color-muted)] transition-colors hover:bg-white/5 hover:text-[var(--color-text)]"
+              >
+                <FaLinkedin size={17} />
+              </a>
+            </div>
+
             <a
               href={PROFILE.resumeUrl}
               download
-              className="ml-1 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[var(--color-electric)] to-[var(--color-purple)] px-4 py-2.5 text-sm font-medium text-white shadow-[0_0_24px_-8px_var(--color-electric)] transition-shadow hover:shadow-[0_0_32px_-6px_var(--color-electric)]"
+              className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-gradient-to-r from-[var(--color-electric)] to-[var(--color-purple)] px-4 py-2.5 text-sm font-medium text-white shadow-[0_0_24px_-8px_var(--color-electric)] transition-shadow hover:shadow-[0_0_32px_-6px_var(--color-electric)]"
             >
               <Download size={15} />
               Resume
@@ -149,7 +157,7 @@ export function Navbar() {
 
           {/* Mobile toggle */}
           <button
-            className="rounded-full p-2 text-[var(--color-text)] lg:hidden"
+            className="rounded-full p-2 text-[var(--color-text)] xl:hidden"
             onClick={() => setMobileOpen((v) => !v)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
@@ -167,7 +175,7 @@ export function Navbar() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden lg:hidden"
+            className="overflow-hidden xl:hidden"
           >
             <div className="section-container mt-2">
               <div className="glass-blur flex flex-col gap-1 rounded-2xl p-4">
@@ -189,20 +197,40 @@ export function Navbar() {
                     {link.label}
                   </a>
                 ))}
+
                 <div className="mt-2 flex items-center gap-2 border-t border-[var(--color-border)] pt-4">
                   <button
                     onClick={toggleTheme}
                     className="rounded-full p-2.5 text-[var(--color-muted)] hover:bg-white/5"
                     aria-label="Toggle theme"
                   >
-                    {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
+                    {theme === "dark" ? (
+                      <Sun size={17} />
+                    ) : (
+                      <Moon size={17} />
+                    )}
                   </button>
-                  <a href={PROFILE.github} target="_blank" rel="noopener noreferrer" className="rounded-full p-2.5 text-[var(--color-muted)] hover:bg-white/5" aria-label="GitHub">
+
+                  <a
+                    href={PROFILE.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full p-2.5 text-[var(--color-muted)] hover:bg-white/5"
+                    aria-label="GitHub"
+                  >
                     <FaGithub size={17} />
                   </a>
-                  <a href={PROFILE.linkedin} target="_blank" rel="noopener noreferrer" className="rounded-full p-2.5 text-[var(--color-muted)] hover:bg-white/5" aria-label="LinkedIn">
+
+                  <a
+                    href={PROFILE.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-full p-2.5 text-[var(--color-muted)] hover:bg-white/5"
+                    aria-label="LinkedIn"
+                  >
                     <FaLinkedin size={17} />
                   </a>
+
                   <a
                     href={PROFILE.resumeUrl}
                     download
