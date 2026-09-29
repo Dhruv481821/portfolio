@@ -50,16 +50,6 @@ export function CertificatesSection() {
               </GlassCard>
             </motion.button>
           ))}
-
-          {/* Placeholder slot signaling more to come */}
-          <motion.div variants={fadeUp}>
-            <GlassCard hover={false} className="flex h-full flex-col items-center justify-center border-dashed text-center">
-              <Award size={22} className="text-[var(--color-muted-dim)]" />
-              <p className="mt-3 text-sm text-[var(--color-muted)]">
-                More certificates coming as current courses complete.
-              </p>
-            </GlassCard>
-          </motion.div>
         </motion.div>
       </div>
 
