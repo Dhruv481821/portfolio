@@ -15,15 +15,15 @@ export function ProjectModal({
     <Modal isOpen={!!project} onClose={onClose} labelledBy="project-modal-title">
       {project && (
         <div>
-          {project.image && (
-            <div className="mb-6 overflow-hidden rounded-2xl border border-white/10">
-              <img
-                src={project.image}
-                alt={`${project.title} preview`}
-                className="h-auto max-h-[420px] w-full object-cover"
-              />
-            </div>
-          )}
+        {(project.image || project.cover) && (
+          <div className="mb-6 overflow-hidden rounded-2xl border border-white/10">
+            <img
+              src={project.image || project.cover}
+              alt={`${project.title} preview`}
+              className="h-auto max-h-[420px] w-full object-cover"
+            />
+          </div>
+        )}
 
           <span className="font-mono text-xs uppercase tracking-wide text-[var(--color-cyan)]">
             {project.category}

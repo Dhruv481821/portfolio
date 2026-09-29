@@ -7,7 +7,7 @@ export const PROJECTS: Project[] = [
     tagline:
       "A full-stack Java dashboard that replaces the notes-app chaos of job hunting.",
     category: "Full-Stack",
-    cover: "/projects/internship-tracker.svg",
+    image: "/projects/Internship_Tracker.png",
     problem:
       "Tracking internship applications gets messy fast — dozens of companies, different statuses (Applied, OA, Interview, Offer, Rejected), and deadlines to follow up on. Doing this in a notes app or scattered messages means things get missed.",
     solution:
@@ -34,7 +34,7 @@ export const PROJECTS: Project[] = [
     tagline:
       "Pattern recognition for mood and habits, not just a digital diary.",
     category: "Full-Stack",
-    cover: "/projects/mental-health-tracker.svg",
+    image: "/projects/Teen_Mood_Tracker.png",
     problem:
       "Many people experience stress, anxiety, burnout, or mood swings but fail to recognize patterns because they don't consistently track their emotional state.",
     solution:
@@ -53,7 +53,7 @@ export const PROJECTS: Project[] = [
     tagline:
       "A structured, portfolio-driven alternative to scattered tutorial-hopping.",
     category: "Full-Stack",
-    cover: "/projects/skill-forge-ai.svg",
+    image: "/projects/Skill_Forge.png",
     problem:
       "Students often learn through scattered resources — YouTube, courses, blogs, notes — without a structured roadmap, which makes it hard to measure progress or stay motivated.",
     solution:
