@@ -21,28 +21,46 @@ export function ProjectCard({
      * that moment — so an inherited card that appears later would stay stuck at
      * `hidden` (invisible) forever. Clearing the search box is enough to hit it.
      */
-    <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}>
+    <motion.div
+      variants={fadeUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportOnce}
+    >
       <GlassCard className="group flex h-full flex-col overflow-hidden !p-0">
         <button
           onClick={() => onOpen(project)}
           className="relative aspect-[16/10] w-full overflow-hidden bg-gradient-to-br from-[var(--color-surface-raised)] to-[var(--color-bg)] text-left"
           aria-label={`Open case study for ${project.title}`}
         >
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="font-[var(--font-display)] text-3xl font-semibold text-[var(--color-border)] transition-colors duration-300 group-hover:text-[var(--color-electric)]">
-              {project.title
-                .split(" ")
-                .map((w) => w[0])
-                .join("")
-                .slice(0, 3)}
-            </span>
-          </div>
+          {project.image ? (
+            <img
+              src={project.image}
+              alt={`${project.title} preview`}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="font-[var(--font-display)] text-3xl font-semibold text-[var(--color-border)] transition-colors duration-300 group-hover:text-[var(--color-electric)]">
+                {project.title
+                  .split(" ")
+                  .map((w) => w[0])
+                  .join("")
+                  .slice(0, 3)}
+              </span>
+            </div>
+          )}
+
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         </button>
 
         <div className="flex flex-1 flex-col p-6">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="font-[var(--font-display)] text-lg font-semibold">{project.title}</h3>
+            <h3 className="font-[var(--font-display)] text-lg font-semibold">
+              {project.title}
+            </h3>
+
             {project.github && (
               <a
                 href={project.github}
@@ -55,15 +73,18 @@ export function ProjectCard({
               </a>
             )}
           </div>
+
           <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
             {project.tagline}
           </p>
 
-          <div className="mt-4 flex flex-wrap gap-1.5">
-            {project.techStack.slice(0, 4).map((tech) => (
-              <Chip key={tech} label={tech} />
-            ))}
-          </div>
+          {project.techStack.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {project.techStack.slice(0, 4).map((tech) => (
+                <Chip key={tech} label={tech} />
+              ))}
+            </div>
+          )}
 
           <button
             onClick={() => onOpen(project)}

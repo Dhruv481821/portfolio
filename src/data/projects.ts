@@ -4,7 +4,8 @@ export const PROJECTS: Project[] = [
   {
     id: "internship-tracker",
     title: "Internship Application Tracker",
-    tagline: "A full-stack Java dashboard that replaces the notes-app chaos of job hunting.",
+    tagline:
+      "A full-stack Java dashboard that replaces the notes-app chaos of job hunting.",
     category: "Full-Stack",
     cover: "/projects/internship-tracker.svg",
     problem:
@@ -15,14 +16,23 @@ export const PROJECTS: Project[] = [
       "Automatic overdue follow-up detection — flags applications where the follow-up date has passed and the status is still active, turning stored data into an action prompt rather than a static record.",
       "Live funnel analytics — calculates real interview and offer conversion rates on the fly instead of just listing raw counts.",
     ],
-    techStack: ["HTML", "CSS", "JavaScript", "Java", "JDBC", "MySQL", "Git/GitHub"],
+    techStack: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Java",
+      "JDBC",
+      "MySQL",
+      "Git/GitHub",
+    ],
     github: "https://github.com/Dhruv481821/internship-tracker",
     featured: true,
   },
   {
     id: "mental-health-tracker",
     title: "Mental Health Tracker",
-    tagline: "Pattern recognition for mood and habits, not just a digital diary.",
+    tagline:
+      "Pattern recognition for mood and habits, not just a digital diary.",
     category: "Full-Stack",
     cover: "/projects/mental-health-tracker.svg",
     problem:
@@ -40,7 +50,8 @@ export const PROJECTS: Project[] = [
   {
     id: "skill-forge-ai",
     title: "Skill Forge AI",
-    tagline: "A structured, portfolio-driven alternative to scattered tutorial-hopping.",
+    tagline:
+      "A structured, portfolio-driven alternative to scattered tutorial-hopping.",
     category: "Full-Stack",
     cover: "/projects/skill-forge-ai.svg",
     problem:
@@ -53,6 +64,52 @@ export const PROJECTS: Project[] = [
     ],
     techStack: ["HTML", "CSS", "JavaScript", "React"],
     github: "https://github.com/Dhruv481821/SkillForge-AI",
+    featured: true,
+  },
+  {
+    id: "devtrack-ai",
+    title: "DevTrack AI",
+    tagline:
+      "An AI-powered developer operating system — in active early-stage development.",
+    category: "Full-Stack",
+    image: "/projects/devtrack-ai.jpg",
+    problem:
+      "Developers preparing for interviews or growing a career manage their code (GitHub), DSA practice (LeetCode/spreadsheets), notes, resume, and job applications as five disconnected tools that don't talk to each other — so a question like \"am I actually ready for this job?\" has no single source of truth to answer it from.",
+    solution:
+      "Designing a system that correlates signal across those tools rather than just chatting about them in isolation — e.g. surfacing that a resume claims backend strength while 90 days of practice history are almost entirely frontend-tagged. The project ships with its complete pre-implementation engineering blueprint (20 documents: PRD, system architecture, database design, API spec, security threat model, AI architecture) written and self-reviewed before application code, kept in sync as it's built. Status: Phase 0 (Foundation) — in progress, no phase complete yet, tracked openly in the repo's roadmap doc rather than presented as finished.",
+    features: [
+      "Modular monolith with enforced module boundaries — cross-module coupling (e.g. Calendar needing Job Tracker data) goes through an in-process domain event bus instead of direct cross-module calls.",
+      "AI agents are architecturally constrained to read-only, bounding the blast radius of prompt injection by design rather than by best-effort filtering alone.",
+    ],
+    techStack: [
+      "React 19",
+      "TypeScript",
+      "Tailwind CSS",
+      "Java 21",
+      "Spring Boot 3",
+      "PostgreSQL",
+      "Redis",
+      "Google Gemini",
+    ],
+    github: "https://github.com/Dhruv481821/DEVTRACK-AI",
+    featured: true,
+  },
+  {
+    id: "ultron",
+    title: "ULTRON",
+    tagline:
+      "A personal AI assistant that plans, organizes, researches, and automates in one interface.",
+    category: "AI Tool",
+    image: "/projects/ultron.jpg",
+    problem:
+      "Getting real help from AI day-to-day usually means bouncing between separate chat, task, calendar, and automation tools — none of them sharing context with each other.",
+    solution:
+      "Built a single assistant interface combining chat, task and calendar management, notes, a knowledge base, and automations, with the assistant able to invoke web search, code execution, file handling, and memory directly inside a conversation instead of requiring separate tools.",
+    features: [
+      "Unified quick-tool actions (search, summarize, generate, code, analyze, automate) available directly from the assistant's home view.",
+      "Tracks its own multi-project context (this portfolio, DevTrack AI, and others) alongside personal tasks in one dashboard.",
+    ],
+    techStack: [],
     featured: true,
   },
 ];

@@ -30,7 +30,8 @@ export interface Project {
   title: string;
   tagline: string;
   category: string;
-  cover: string;
+  cover?: string;
+  image?: string;
   problem: string;
   solution: string;
   features: string[];
